@@ -1,6 +1,7 @@
 .DS_Store
 .idea
 .project
+.vscode
 
 composer.lock
 *.log
