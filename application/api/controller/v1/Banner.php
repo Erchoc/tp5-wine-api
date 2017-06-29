@@ -5,6 +5,7 @@ namespace app\api\controller\v1;
 use think\Controller;
 use think\Request;
 use app\api\validate\BannerValidate;
+use app\api\validate\IDMustBePostiveInt;
 
 class Banner extends Controller
 {
@@ -15,16 +16,8 @@ class Banner extends Controller
      */
     public function index($id, Request $request)
     {
-        $data = $request->param();
-
-        $validate = new BannerValidate();
-        $result = $validate->batch()
-                           ->check($data);
-        if( !$result ) {
-            return $validate->getError();
-        } else {
-
-        }
+        (new IDMustBePostiveInt())->gocheck();
+        return 'OK';
     }
 
     /**
