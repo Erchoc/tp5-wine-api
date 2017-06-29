@@ -4,7 +4,9 @@ namespace app\api\controller\v1;
 
 use think\Controller;
 use think\Request;
+use think\Exception;
 use app\api\validate\BannerValidate;
+use app\api\model\Banner as BannerModel;
 use app\api\validate\IDMustBePostiveInt;
 
 class Banner extends Controller
@@ -17,7 +19,17 @@ class Banner extends Controller
     public function index($id, Request $request)
     {
         (new IDMustBePostiveInt())->gocheck();
-        return 'OK';
+        try {
+            $banner = BannerModel::getBannerById($id);
+        } catch( \Exception $ex ) {
+            // TODO: 这里再抛出异常的话到ThinkPHP5的全局异常类中处理
+            $err = [
+                'error_code' => '10001',
+                'msg'        => $ex->getMessage()
+            ];
+            return json($err,400); 
+        }
+        return $banner;
     }
 
     /**
