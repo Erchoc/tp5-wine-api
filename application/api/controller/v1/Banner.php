@@ -16,8 +16,9 @@ class Banner extends Controller
      *
      * @return \think\Response
      */
-    public function index($id, Request $request)
+    public function index(Request $request)
     {
+        return 'ooo';
         (new IDMustBePostiveInt())->gocheck();
         try {
             $banner = BannerModel::getBannerById($id);
